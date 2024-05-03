@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="interpret.css"/> -->
+</head>
+
+<body>
+  <nav class="navbar navbar-expand navbar-dark bg-primary">
+    <!-- if you want custom : style="background-colored" -->
+    <div class="container">
+      <a href="#" class="navbar-brand mb-0 h1">
+        <img class="d-inline-block align-top" src="{{ url_for('static', filename='signLearn_icon.svg') }}" width="30" height="30" /> SignLearn
+      </a>
+      <div class="collapse navbar-collapse" id="nabarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a href="#" class="nav-link ">
+              Home
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="#" class="nav-link active">
+              Recognize Sign
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="col-md-8 offset-md-2 info" style="margin-top:2em">
+    <h1 class="text-center">Interpret Signs</h1>
+    <p class="text-center" style="margin-top:2em">
+      Recognize and interpret different signs of sign language in real-time. Allow the application to take real time
+      feed from your webcam.
+    </p>
+  </div>
+
+  <div id="box">
+    <div class="card text-center" style="width: 38rem; height: 20rem; margin:0 auto; margin-top:2em; ">
+      <!-- Add the "text-center" class to center the contents horizontally -->
+
+      <div class="card-body">
+        <p class="card-text"  style="margin-top:2em">Authorize the application to access your webcam and capture real-time footage by clicking
+          on
+          the button below.</p>
+        <button href="#" class="btn btn-primary"  style="margin-top:2em" id="opencam">Turn on webcam</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isCamOpen = false;
+    const x = document.getElementById("opencam");
+    x.onclick = () => {
+      if (isCamOpen) {
+        console.log("Closing the camera");
+        x.innerText = "Video Cam";
+        fetch('/closecam', { method: 'GET' })
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      } else {
+        console.log("Opening the camera");
+        x.innerText = "Close Cam";
+        fetch('/opencam', { method: 'GET' })
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      }
+
+      isCamOpen = !isCamOpen;
+    };
+  </script>
+</body>
+</html>
